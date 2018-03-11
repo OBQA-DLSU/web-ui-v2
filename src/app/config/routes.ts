@@ -16,13 +16,55 @@ export interface ChildrenItems {
 }
 
 //Menu Items
-const ADMIN: RouteInfo[] = [{
-  path: '/admin/dashboard',
-  title: 'Dashboard',
-  type: 'link',
-  icontype: 'dashboard'
-}];
+const ADMIN: RouteInfo[] = [
+  {
+    path: '/admin/dashboard',
+    title: 'Dashboard',
+    type: 'link',
+    icontype: 'dashboard'
+  }
+];
+
+const COORDINATOR: RouteInfo[] = [
+  {
+    path: '/coordinator/dashboard',
+    title: 'Dashboard',
+    type: 'link',
+    icontype: 'dashboard'
+  }
+];
+
+const INSTRUCTOR: RouteInfo[] = [
+  {
+    path: '/instructor/dashboard',
+    title: 'Dashboard',
+    type: 'link',
+    icontype: 'dashboard'
+  }
+];
+
+const STUDENT: RouteInfo[] = [
+  {
+    path: '/student/dashboard',
+    title: 'Dashboard',
+    type: 'link',
+    icontype: 'dashboard'
+  }
+];
+
+const GUEST: RouteInfo[] = [
+  {
+    path: '/guest/dashboard',
+    title: 'Dashboard',
+    type: 'link',
+    icontype: 'dashboard'
+  }
+]
 
 export const ROUTES = {
-  ADMIN: ADMIN
+  ADMIN: ADMIN,
+  COORDINATOR: COORDINATOR,
+  INSTRUCTOR: INSTRUCTOR,
+  STUDENT: STUDENT,
+  GUEST: GUEST
 }

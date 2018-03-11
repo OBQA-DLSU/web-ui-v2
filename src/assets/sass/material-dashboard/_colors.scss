@@ -150,22 +150,40 @@ $teal-A400: #1de9b6 !default;
 $teal-A700: #00bfa5 !default;
 $teal: $teal-500 !default;
 
+// default
+// $green-50: #e8f5e9 !default;
+// $green-100: #c8e6c9 !default;
+// $green-200: #a5d6a7 !default;
+// $green-300: #81c784 !default;
+// $green-400: #66bb6a !default;
+// $green-500: #4caf50 !default;
+// $green-600: #43a047 !default;
+// $green-700: #388e3c !default;
+// $green-800: #2e7d32 !default;
+// $green-900: #1b5e20 !default;
+// $green-A100: #b9f6ca !default;
+// $green-A200: #69f0ae !default;
+// $green-A400: #00e676 !default;
+// $green-A700: #00c853 !default;
+// $green: $green-500 !default;
 
+
+// custom value
 $green-50: #e8f5e9 !default;
 $green-100: #c8e6c9 !default;
 $green-200: #a5d6a7 !default;
 $green-300: #81c784 !default;
 $green-400: #66bb6a !default;
 $green-500: #4caf50 !default;
-$green-600: #43a047 !default;
+$green-600: #2B4E37 !default;
 $green-700: #388e3c !default;
 $green-800: #2e7d32 !default;
-$green-900: #1b5e20 !default;
-$green-A100: #b9f6ca !default;
+$green-900: #001D0A !default;
+$green-A100: #2B4E37 !default; //primary button color
 $green-A200: #69f0ae !default;
 $green-A400: #00e676 !default;
 $green-A700: #00c853 !default;
-$green: $green-500 !default;
+$green: $green-A100 !default;
 
 
 $light-green-50: #f1f8e9 !default;

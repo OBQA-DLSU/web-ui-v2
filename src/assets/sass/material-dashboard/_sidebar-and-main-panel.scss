@@ -375,6 +375,27 @@
         }
     }
 
+    // adding green color option for sidebar
+    &[data-background-color="green"]{
+        background-color: $green-600;
+        @include sidebar-background-color($green-900, $white-color);
+
+        .user,
+        .logo,
+        .nav li.separator{
+            &:after{
+                background-color: rgba(255,255,255, .3);
+            }
+        }
+
+        .nav{
+            li:hover:not(.active) > a,
+            li.active > [data-toggle="collapse"]{
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+
     &[data-active-color="purple"]{
         @include set-background-color-button($brand-primary);
     }

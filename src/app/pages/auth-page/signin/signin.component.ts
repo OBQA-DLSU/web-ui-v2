@@ -73,7 +73,7 @@ export class SigninComponent implements OnInit, OnDestroy {
       this.sessionActionCreator.SessionCreate(this.signInForm.value);
       this.sessionSubscription = this.session$.subscribe(
         (session: ISession) => {
-          if (session.token && pastSession && !pastSession.ProgramId) {
+          if (session.token && !session.Program) {
             this.router.navigate(['auth/role']);
           }
         }

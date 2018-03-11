@@ -63,7 +63,6 @@ export class RolePageComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.roleSelectForm.value);
     this.sessionSubscription = this.session$
     .subscribe(
       (session: ISessionStore) => {
@@ -75,7 +74,7 @@ export class RolePageComponent implements OnInit, DoCheck, OnDestroy {
           const Program: IProgram = Student.Program;
           const isAdmin: boolean = Student.isAdmin;
           this.sessionActionCreator.SessionUpdateLocalStorage(isStudent, isAdmin, Program.id, Program);
-          // this.router.navigate([`student/dashboard`]);
+          this.router.navigate([`student/dashboard`]);
         } else {
           const isStudent: boolean = this.roleSelectForm.value.isStudent;
           const Instructor: IInstructor = _.find(session.User.Instructors, (i) => {
@@ -84,7 +83,11 @@ export class RolePageComponent implements OnInit, DoCheck, OnDestroy {
           const Program: IProgram = Instructor.Program;
           const isAdmin: boolean = Instructor.isAdmin;
           this.sessionActionCreator.SessionUpdateLocalStorage(isStudent, isAdmin, Program.id, Program);
-          // this.router.navigate([`instructor/dashboard`]);
+          if (isAdmin) {
+            this.router.navigate([`coordinator/dashboard`]);
+          } else {
+            this.router.navigate([`instructor/dashboard`]);
+          }
         }
       }, error => {},
       () => {
