@@ -1,0 +1,32 @@
+<div class="col-md-12">
+    
+
+      <div *ngIf="isUser; else otherUser">
+          <mat-card>
+              <mat-card-header>
+                <mat-card-title>You</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <p>
+                  {{commentContent}}
+                </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button>Edit</button>
+                <button mat-button>Delete</button>
+              </mat-card-actions>
+            </mat-card>
+      </div>
+      <ng-template #otherUser>
+          <mat-card>
+              <mat-card-header>
+                <mat-card-title>{{commentAuthor}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <p>
+                  {{commentContent}}
+                </p>
+              </mat-card-content>
+            </mat-card>
+      </ng-template>
+</div>

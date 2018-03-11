@@ -1,0 +1,109 @@
+<div class="wrapper wrapper-full-page">
+  <nav class="navbar navbar-primary navbar-transparent navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-example">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/#/dashboard">OBQA System</a>
+      </div>
+      <div class="collapse navbar-collapse" id="menu-example">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="/#/dashboard">
+              <i class="material-icons">dashboard</i> Dashboard
+            </a>
+          </li>
+          <li class="">
+            <a href="/#/pages/sign-up">
+              <i class="material-icons">person_add</i> Sign-up
+            </a>
+          </li>
+          <li class=" active ">
+            <a href="/#/pages/sign-in">
+              <i class="material-icons">fingerprint</i> Sign-in
+            </a>
+          </li>
+          <li class="">
+            <a href="/#/pages/lock">
+              <i class="material-icons">lock_open</i> Lock
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="full-page login-page" filter-color="black">
+    <div class="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+            <form [formGroup]="signInForm" (submit)="submit()">
+              <div class="card card-login card-hidden">
+                <div class="card-header text-center" data-background-color="green">
+                  <h4 class="card-title">Sign in</h4>
+                </div>
+                <div class="card-content">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">face</i>
+                    </span>
+                    <app-obqa-input-basic length="20" formControlName="email" [c]="signInForm.controls.email" [optional]="true" idd="email" placeholder=""
+                      type="email" text="Email:"></app-obqa-input-basic>
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">info</i>
+                    </span>
+                    <app-obqa-input-basic length="20" formControlName="password" [c]="signInForm.controls.password" [optional]="true" idd="password"
+                      placeholder="" type="password" text="Password:"></app-obqa-input-basic>
+                  </div>
+                </div>
+                <div class="footer text-center">
+                  <button type="submit" class="btn btn-rose btn-simple btn-wd btn-lg">Sign-in</button>
+                  <p><a (click)="forgotPasswordToggle()">forgot password?</a></p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+          <nav class="pull-left">
+            <!-- <ul>
+              <li>
+                <a href="#">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  Company
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  Portfolio
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  Blog
+                </a>
+              </li>
+            </ul> -->
+          </nav>
+          <p class="copyright pull-right">
+            &copy; {{test | date: 'yyyy'}}
+            <a href="">DLSU</a>, Outcomes-based Quality Assurance
+          </p>
+        </div>
+      </footer>
+      <div class="full-page-background" style="background-image: url(../../../assets/img/login.jpeg) "></div>
+  </div>
+</div>
