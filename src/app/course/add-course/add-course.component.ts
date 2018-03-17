@@ -51,7 +51,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
     (this.userSubscription)? this.userSubscription.unsubscribe() : null; 
   }
 
-  submit (event) {
+  submit () {
     if (this.courseForm.valid) {
       this.courseActionCreator.CreateCourse(this.courseForm.value, this.programId);
     }

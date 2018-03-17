@@ -22,7 +22,7 @@ declare var $: any;
 })
 export class EditCourseDialog implements OnInit, OnDestroy {
 
-  private courseEditForm: FormGroup;
+  public courseEditForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<EditCourseDialog>,
@@ -48,7 +48,7 @@ export class EditCourseDialog implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  onSubmit(form): void {
+  onSubmit(): void {
     if (this.courseEditForm.valid) {
       this.dialogRef.close(`${JSON.stringify(this.courseEditForm.value)}`);
     } else {

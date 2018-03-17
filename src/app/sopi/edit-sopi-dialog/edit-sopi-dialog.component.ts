@@ -19,7 +19,7 @@ import { ISession } from '../../interfaces/session/session.interface';
 
 export class EditSopiDialog implements OnInit, OnDestroy {
 
-  private sopiEditForm: FormGroup;
+  public sopiEditForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<EditSopiDialog>,
@@ -44,7 +44,7 @@ export class EditSopiDialog implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  onSubmit(form): void {
+  onSubmit(): void {
     if (this.sopiEditForm.valid) {
       this.dialogRef.close(`${JSON.stringify(this.sopiEditForm.value)}`);
     } else {
