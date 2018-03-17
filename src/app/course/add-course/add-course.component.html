@@ -1,0 +1,72 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div *appspinner="(spinner | async)" class="col-md-12">
+        <div class="col-md-12">
+          <div class="card">
+            <form [formGroup]="courseForm">
+              <div class="card-header card-header-icon" data-background-color="green">
+                <i class="material-icons">add</i>
+              </div>
+              <div class="card-content">
+                <h4 class="card-title">Add New Course</h4>
+                <app-obqa-input-basic
+                  length="6"
+                  formControlName="code"
+                  [c]="courseForm.controls.code"
+                  [optional]="true"
+                  idd="code"
+                  placeholder=""
+                  type="text"
+                  text="Course Code:"
+                ></app-obqa-input-basic>
+                <app-obqa-input-basic
+                  length="6"
+                  formControlName="name"
+                  [c]="courseForm.controls.name"
+                  [optional]="true"
+                  idd="name"
+                  placeholder=""
+                  type="text"
+                  text="Course Name:"
+                ></app-obqa-input-basic>
+                <app-obqa-input-basic
+                  length="12"
+                  formControlName="description"
+                  [c]="courseForm.controls.description"
+                  [optional]="true"
+                  idd="3"
+                  placeholder=""
+                  type="text"
+                  text="Description:"
+                ></app-obqa-input-basic>
+                <div class="checkbox pull-left">
+                  <label>
+                    <input type="checkbox" name="toBeAssessed" formControlName="toBeAssessed"> To Be Assessed
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button [disabled]="!courseForm.valid" [ngClass]="{'btn': true ,'btn-info': courseForm.valid, 'btn-disabled': !courseForm.valid }" (click)="submit()">Submit</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header card-header-icon" data-background-color="green">
+                <i class="material-icons">folder</i>
+              </div>
+              <div class="card-content">
+                <h4 class="card-title">Upload .xls File</h4>
+                <!-- <app-obqa-upload-basic fileAlias="file" [URL]="uploadUrl"></app-obqa-upload-basic> -->
+                <app-xlsx-to-json
+                  (clickSubmit)="uploadXLXS($event)"
+                ></app-xlsx-to-json>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

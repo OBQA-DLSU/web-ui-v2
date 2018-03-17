@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ObqaTableComponent } from './obqa-table.component';
+import { AddSopiComponent } from './add-sopi.component';
 
-describe('ObqaTableComponent', () => {
-  let component: ObqaTableComponent;
-  let fixture: ComponentFixture<ObqaTableComponent>;
+describe('AddSopiComponent', () => {
+  let component: AddSopiComponent;
+  let fixture: ComponentFixture<AddSopiComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ObqaTableComponent ]
+      declarations: [ AddSopiComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ObqaTableComponent);
+    fixture = TestBed.createComponent(AddSopiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

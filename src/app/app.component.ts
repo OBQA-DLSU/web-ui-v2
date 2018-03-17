@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionActionCreator } from  './store/action-creators';
 
 declare var $: any;
 
@@ -9,9 +10,12 @@ declare var $: any;
 
 export class AppComponent implements OnInit {
 
-    constructor() {}
+    constructor(
+        private sessionActionCreator: SessionActionCreator
+    ) {}
 
     ngOnInit() {
         $.material.init();
+        this.sessionActionCreator.SessionCheck();
     }
 }

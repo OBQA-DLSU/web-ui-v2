@@ -31,6 +31,17 @@ const COORDINATOR: RouteInfo[] = [
     title: 'Dashboard',
     type: 'link',
     icontype: 'dashboard'
+  },
+  {
+    path: '/coordinator/set-up',
+    title: 'Setup System',
+    type: 'sub',
+    icontype: 'settings',
+    collapse: 'Course',
+    children: [
+      { path: 'course-list', title: 'Course List', ab: 'CL'},
+      { path: 'add-course', title: 'Add Course', ab: 'AC'}
+    ]
   }
 ];
 

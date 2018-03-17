@@ -1,0 +1,43 @@
+<div>
+  <div class="main-content">
+    <div class="container-fluid">
+      <div *appspinner="(spinner | async)" class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-icon" data-background-color="green">
+              <i class="material-icons">assignment</i>
+            </div>
+            <div *ngIf="(Courses | async)" class="card-content">
+              <app-obqa-table
+                tableTitle="Course List"
+                paginator="true"
+                checkTooltip="Set as To be assessed"
+                xTooltip="Remove in to be assessed"
+                [filterBy]="filterBy"
+                [filterValue]="filterValue"
+                [currentPage]="(page | async)"
+                [actionDelete]="(isAdmin | async)"
+                [actionEdit]="(isAdmin | async)"
+                [actionCheck]="(isAdmin | async)"
+                [actionX]="(isAdmin | async)"
+                [tableDataArray]="(Courses)"
+                [tableHeaderName]="dataNames"
+                [tableHeaderAlias]="dataNameAlias"
+                (clickEdit)="onClickEdit($event)"
+                (clickDelete)="onClickDelete($event)"
+                (clickCheck)="onClickCheck($event)"
+                (clickX)="onClickX($event)"
+              >
+                <button class="btn btn-info" (click)="toggleFilter()">Filter by to be assessed</button>
+                <button class="btn btn-success" (click)="showAll()">Show All Data</button>
+              </app-obqa-table>
+            </div>
+            <!-- end content-->
+          </div>
+          <!--  end card  -->
+        </div>
+        <!-- end col-md-12 -->
+      </div>
+    </div>
+  </div>
+</div>

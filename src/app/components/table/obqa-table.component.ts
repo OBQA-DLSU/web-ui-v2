@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject, DoCheck } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject, DoCheck, ViewChildren } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 import * as _ from 'lodash';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -23,14 +23,22 @@ export class ObqaTableComponent implements OnInit {
   @Input() actionEdit: boolean;
   @Input() actionMore: boolean;
   @Input() actionViewDetail: boolean;
+  @Input() actionCheck: boolean;
+  @Input() actionX: boolean;
   @Input() paginator: boolean;
   @Input() currentPage: number;
+  @Input() filterBy: string;
+  @Input() filterValue: any;
+  @Input() checkTooltip: string;
+  @Input() xTooltip: string;
   @Input() tableDataArray: Observable<any[]>;
   @Input() tableHeaderName: Array<string>;
   @Input() tableHeaderAlias: Array<string>;
   @Output() clickEdit = new EventEmitter<any>();
   @Output() clickDelete = new EventEmitter<any>();
   @Output() clickMore = new EventEmitter<any>();
+  @Output() clickCheck = new EventEmitter<any>();
+  @Output() clickX = new EventEmitter<any>();
 
   public newTableDataArray:any[]; // page number
   public itemPerPage:number = 5; // item per page
@@ -65,6 +73,7 @@ export class ObqaTableComponent implements OnInit {
 
   ngDoCheck () {
     this.tableDataArray
+    .map(data => this.filter(data, this.filterBy, this.filterValue))
     .map(data => this.chunker(data, this.itemPerPage, this.currentPage))
     .subscribe(
       data => {
@@ -74,7 +83,7 @@ export class ObqaTableComponent implements OnInit {
   }
 
   actionsEnabled (): boolean {
-    return (this.actionDelete || this.actionEdit || this.actionMore) ? true : false;
+    return (this.actionDelete || this.actionEdit || this.actionMore || this.actionCheck) ? true : false;
   }
 
   onFirst() {
@@ -113,6 +122,26 @@ export class ObqaTableComponent implements OnInit {
 
   onMoreClick (data) {
     this.clickMore.emit(data);
+  }
+
+  onCheckClick (data) {
+    this.clickCheck.emit(data);
+  }
+
+  onXClick (data) {
+    this.clickX.emit(data);
+  }
+
+  // filter
+  filter (data: any[], filterBy: string = null, filterValue: any = null): any[] {
+    if (!filterBy) {
+      return data;
+    }
+    const filteredData: any[] = _.filter(data, (d) => {
+      return d[filterBy] === filterValue;
+    });
+
+    return filteredData;
   }
 
 }

@@ -27,7 +27,8 @@ import { XlsxToJsonComponent } from './upload/xlsx-json/xlsx-to-json.component';
     ObqaUploadBasicComponent,
     ObqaInputBasicComponent,
     CardCommentComponent,
-    ObqaTableSimpleComponent
+    ObqaTableSimpleComponent,
+    XlsxToJsonComponent
   ],
   declarations: [
     ObqaTableComponent,

@@ -19,7 +19,9 @@ import {
   COURSE_UPDATE_FULFILLED,
   COURSE_DELETE_ATTEMPT,
   COURSE_DELETE_FAILED,
-  COURSE_DELETE_FULFILLED
+  COURSE_DELETE_FULFILLED,
+  COURSE_BULK_CREATE_ATTEMPT,
+  COURSE_BULK_CREATE_FULFILLED
 } from '../action/course.actions';
 import { MiscActionCreator } from './misc.actioncreator';
 
@@ -31,6 +33,7 @@ export class CourseActionCreator implements OnDestroy {
   private getCourseSubscription: Subscription = null;
   private updateCourseSubscription: Subscription = null;
   private deleteCourseSubscription: Subscription = null;
+  private createBulkCourseSubscription: Subscription = null;
 
   private errorMessage: string = null;
 
@@ -46,6 +49,7 @@ export class CourseActionCreator implements OnDestroy {
     (this.getCourseSubscription) ? this.getCourseSubscription.unsubscribe() : null;
     (this.updateCourseSubscription) ? this.updateCourseSubscription.unsubscribe() : null;
     (this.deleteCourseSubscription) ? this.deleteCourseSubscription.unsubscribe() : null;
+    (this.createBulkCourseSubscription) ? this.createBulkCourseSubscription.unsubscribe() : null;
   }
   
   CreateCourse (course: ICourseView, programId: number) {
@@ -120,12 +124,36 @@ export class CourseActionCreator implements OnDestroy {
     );
   }
 
+  UpdateToBeAssessed (id: number, toBeAssessed: boolean, flat: boolean = true) {
+    this.ngRedux.dispatch({ type: COURSE_UPDATE_ATTEMPT });
+    this.updateCourseSubscription = this.courseService.UpdateToBeAssessed(id, toBeAssessed, flat)
+    .map(data => this.programCourseToView(data))
+    .subscribe(
+      (course: ICourseView) => {
+        this.ngRedux.dispatch({type: COURSE_UPDATE_FULFILLED, payload: course});
+        this.dialogService.showSwal('success-message', {
+          title:  'Successful Course Update',
+          text: `${course.code} was successfully Updated.`
+        });
+      }, err => {
+        this.errorMessage = err._body;
+        if (this.errorMessage && typeof this.errorMessage === 'string') {
+          this.ngRedux.dispatch({ type: COURSE_UPDATE_FAILED, error: this.errorMessage });
+          // put error mesage here.
+        }
+      },
+      () => {
+        this.errorMessage = null;
+      }
+    );
+  }
+
   DeleteCourse (id: number, course: ICourseView) {
     this.ngRedux.dispatch({ type: COURSE_DELETE_ATTEMPT });
     this.deleteCourseSubscription = this.courseService.DeleteCourse(id)
     .subscribe(
       (data) => {
-        this.ngRedux.dispatch({ type: COURSE_DELETE_FULFILLED, payload: data });
+        this.ngRedux.dispatch({ type: COURSE_DELETE_FULFILLED, payload: course });
         this.dialogService.showSwal('success-message', {
           title:  'Successful Course Deletion',
           text: `${course.code} was successfully deleted.`
@@ -141,15 +169,53 @@ export class CourseActionCreator implements OnDestroy {
       }
     );
   }
+
+  CreateBulkCourse (ProgramId: number, dataArray: any, flat: boolean = true) {
+    this.ngRedux.dispatch({ type: COURSE_BULK_CREATE_ATTEMPT });
+    const newDataArray: ICourseView[] = this.ProcessCourseDataArray(dataArray);
+    this.createBulkCourseSubscription = this.courseService.CreateBulkCourse(ProgramId, newDataArray, flat)
+    .subscribe(
+      (data) => {
+        console.log(data);
+        this.ngRedux.dispatch({ type: COURSE_BULK_CREATE_FULFILLED });
+        this.dialogService.showSwal('success-message', {
+          title:  'Successfully uploaded courses'
+          // text: `${course.code} was successfully deleted.`
+        });
+      }, err => {
+        this.errorMessage = err._body;
+        if (this.errorMessage && typeof this.errorMessage === 'string') {
+          this.ngRedux.dispatch({ type: COURSE_BULK_CREATE_FULFILLED, error: this.errorMessage });
+        }
+      },
+      () => {
+        this.errorMessage = null;
+      }
+    );
+  }
+
+  private ProcessCourseDataArray (dataArray: any[]): ICourseView[] {
+    console.log(dataArray);
+    const newData: ICourseView[] = dataArray.map((d) => {
+      return {
+        code: d['CODE'],
+        name: d['NAME'],
+        description: d['DESCRIPTION'],
+        toBeAssessed: d['TO BE ASSESSED']
+      };
+    });
+    console.log(newData);
+    return newData;
+  }
   // functions
   private programCourseToView: Function = (data: IProgramCourse): ICourseView => {
     let newData: ICourseView;
     newData = {
       id: data.id,
-      code: data.Course.code,
-      name: data.Course.name,
+      code: data['Course.code'],
+      name: data['Course.name'],
       description: data.description,
-      Program: data.Program.name,
+      Program: data['Program.name'],
       ProgramId: data.ProgramId,
       toBeAssessed: data.toBeAssessed
     };

@@ -13,25 +13,36 @@ export class CourseService {
   
   private courseUrl: string = `${BACKEND_URL}/api/course/`;
 
-  GetCourse (programId: number): Observable<IProgramCourse[]> {
+  GetCourse (ProgramId: number, flat: boolean = true): Observable<IProgramCourse[]> {
     const headers = new Headers({ 'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.get(this.courseUrl+`${programId}`,options)
+    return this.http.get(this.courseUrl+`${ProgramId}?flat=${flat}`,options)
     .map(response => response.json())
+    .map(data => this.GetData(data))
   }
 
-  CreateCourse (programId:number, course: ICourseView): Observable<IProgramCourse> {
+  CreateCourse (ProgramId:number, Course: ICourseView, flat: boolean = true): Observable<IProgramCourse> {
     const headers = new Headers({ 'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.post(this.courseUrl+`${programId}/${course.toBeAssessed}`, course, options)
+    return this.http.post(this.courseUrl+`${ProgramId}?flat=${flat}`, Course, options)
     .map(response => response.json())
+    .map(data => this.GetData(data))
   }
 
-  UpdateCourse (id: number, course: ICourseView): Observable<IProgramCourse> {
+  UpdateCourse (id: number, Course: ICourseView, flat: boolean = true): Observable<IProgramCourse> {
     const headers = new Headers({ 'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.put(this.courseUrl+`programCourse/${id}`, course, options)
+    return this.http.put(this.courseUrl+`programCourse/${id}?flat=${flat}`, Course, options)
     .map(response => response.json())
+    .map(data => this.GetData(data))
+  }
+
+  UpdateToBeAssessed (id: number, toBeAssessed: boolean, flat: boolean = true): Observable<IProgramCourse> {
+    const headers = new Headers({ 'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
+    return this.http.patch(this.courseUrl+`programCourse/${id}?flat=${flat}`, {toBeAssessed}, options)
+    .map(response => response.json())
+    .map(data => this.GetData(data))
   }
 
   DeleteCourse (id: number): Observable<IProgramCourse> {
@@ -39,6 +50,19 @@ export class CourseService {
     const options = new RequestOptions({headers: headers});
     return this.http.delete(`${this.courseUrl}programCourse/${id}`, options)
     .map(response => response.json())
+    .map(data => this.GetData(data))
+  }
+
+  CreateBulkCourse (ProgramId: number, dataArray: ICourseView[], flat: boolean = true): Observable<any> {
+    const headers = new Headers({ 'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post(this.courseUrl+`bulk/${ProgramId}?flat=${flat}`, {dataArray}, options)
+    .map(response => response.json())
+    .map(data => this.GetData(data))
+  }
+
+  GetData (data) {
+    return data.data;
   }
 
 }

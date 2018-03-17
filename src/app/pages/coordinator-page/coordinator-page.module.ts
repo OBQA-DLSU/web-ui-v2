@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoordinatorPageRoutes } from './coordinator-page.routing';
 import { DashboardModule } from '../../dashboard/dashboard.module';
+import { CourseModule, EditCourseDialog } from '../../course';
 
 @NgModule({
   imports: [
@@ -11,11 +12,13 @@ import { DashboardModule } from '../../dashboard/dashboard.module';
     RouterModule.forChild(CoordinatorPageRoutes),
     FormsModule,
     ReactiveFormsModule,
-    DashboardModule
+    DashboardModule,
+    CourseModule
   ],
   declarations: [
   ],
   entryComponents: [
+    EditCourseDialog
   ]
 })
 
