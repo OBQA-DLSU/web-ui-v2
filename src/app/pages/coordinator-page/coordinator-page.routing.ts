@@ -5,6 +5,11 @@ import {
   AddCourseComponent
 } from '../../course';
 
+import {
+  SopiListComponent,
+  AddSopiComponent
+} from '../../sopi';
+
 export const CoordinatorPageRoutes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
@@ -24,6 +29,14 @@ export const CoordinatorPageRoutes: Routes = [
       {
         path: 'set-up/add-course',
         component: AddCourseComponent
+      },
+      {
+        path: 'set-up/sopi-list',
+        component: SopiListComponent
+      },
+      {
+        path: 'set-up/add-sopi',
+        component: AddSopiComponent
       }
     ]
   },

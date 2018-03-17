@@ -1,8 +1,8 @@
 export interface ISopiView {
   id?: number;
   code?: string;
-  so?: string;
+  So?: string;
   description?: string;
-  programId?: number;
-  program?: string;
+  ProgramId?: number;
+  Program?: string;
 }

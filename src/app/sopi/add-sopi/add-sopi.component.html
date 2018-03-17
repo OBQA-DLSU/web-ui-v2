@@ -4,7 +4,7 @@
       <div *appspinner="(spinner | async)" class="col-md-12">
         <div class="col-md-12">
           <div class="card">
-            <form [formGroup]="sopiForm" (submit)="onSubmit()">
+            <form [formGroup]="sopiForm">
               <div class="card-header card-header-icon" data-background-color="green">
                 <i class="material-icons">add</i>
               </div>
@@ -22,8 +22,8 @@
                 ></app-obqa-input-basic>
                 <app-obqa-input-basic
                   length="6"
-                  formControlName="so"
-                  [c]="sopiForm.controls.so"
+                  formControlName="So"
+                  [c]="sopiForm.controls.So"
                   [optional]="true"
                   idd="name"
                   placeholder=""
@@ -42,7 +42,8 @@
                 ></app-obqa-input-basic>
               </div>
               <div class="footer text-center">
-                <button type="submit" [ngClass]="{
+                <button type="button" (click)="onSubmit()"
+                [ngClass]="{
                   'btn-success': sopiForm.valid,
                   'btn-disabled': !sopiForm.valid,
                   'btn btn-wd btn-lg': true
@@ -57,7 +58,10 @@
               </div>
               <div class="card-content">
                 <h4 class="card-title">Upload .xls File</h4>
-                <!-- <app-obqa-upload-basic fileAlias="sopi" [URL]="uploadUrl"></app-obqa-upload-basic> -->
+                <!-- <app-obqa-upload-basic fileAlias="file" [URL]="uploadUrl"></app-obqa-upload-basic> -->
+                <app-xlsx-to-json
+                  (clickSubmit)="uploadXLXS($event)"
+                ></app-xlsx-to-json>
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import {
   SopiActionCreator,
   MiscActionCreator
 } from '../../store/action-creators';
+import { ISession } from '../../interfaces/session/session.interface';
 
 declare var $: any;
 
@@ -15,12 +16,11 @@ declare var $: any;
 })
 export class AddSopiComponent implements OnInit, OnDestroy {
 
-  
-  private userSubscription: Subscription = null;
-  private programId: number = 5;
+
+  private session: ISession = JSON.parse(localStorage.getItem('session'));
+  private ProgramId: number = this.session.ProgramId;
   private sopiForm: FormGroup;
   
-  @select(s => s.session.user) user;
   @select(s => s.sopis.spinner) spinner;
   constructor(
     private formBuilder: FormBuilder,
@@ -32,24 +32,25 @@ export class AddSopiComponent implements OnInit, OnDestroy {
     this.miscActionCreator.UpdatePageTitle('Add SOPI');
     this.sopiForm = this.formBuilder.group({
       code: [null, Validators.required],
-      so: [null, Validators.required],
+      So: [null, Validators.required],
       description: [null, Validators.required]
     });
-    this.userSubscription = this.user.subscribe(
-      result => {
-        
-      }
-    );
   }
 
   ngOnDestroy() {
-    (this.userSubscription)? this.userSubscription.unsubscribe() : null; 
+
   }
 
-  submit (event) {
+  onSubmit (event) {
     if (this.sopiForm.valid) {
-      this.sopiActionCreator.CreateSopi(this.programId, this.sopiForm.value);
+      this.sopiActionCreator.CreateSopi(this.ProgramId, this.sopiForm.value);
     }
+  }
+
+  uploadXLXS (data) {
+    console.log(data);
+    this.sopiActionCreator.SopiBulkCreate(this.ProgramId, data, true);
+    this.ngOnInit();
   }
 
 }

@@ -20,7 +20,10 @@ import {
   SOPI_UPDATE_FULFILLED,
   SOPI_DELETE_ATTEMPT,
   SOPI_DELETE_FAILED,
-  SOPI_DELETE_FULFILLED
+  SOPI_DELETE_FULFILLED,
+  SOPI_BULK_CREATE_ATTEMPT,
+  SOPI_BULK_CREATE_FAILED,
+  SOPI_BULK_CREATE_FULFILLED
 } from '../action/sopi.actions';
 import { Subscribable } from 'rxjs/Observable';
 import { MiscActionCreator } from './misc.actioncreator';
@@ -33,6 +36,7 @@ export class SopiActionCreator implements OnDestroy {
   private getSopiSubscription: Subscription = null;
   private updateSopiSubscription: Subscription = null;
   private deleteSopiSubscription: Subscription = null;
+  private bulkCreateSubscription: Subscription = null;
 
   private errorMessage: string = null;
 
@@ -48,6 +52,7 @@ export class SopiActionCreator implements OnDestroy {
     (this.getSopiSubscription) ? this.getSopiSubscription.unsubscribe() : null;
     (this.updateSopiSubscription) ? this.updateSopiSubscription.unsubscribe() : null;
     (this.deleteSopiSubscription) ? this.deleteSopiSubscription.unsubscribe() : null;
+    (this.bulkCreateSubscription) ? this.bulkCreateSubscription.unsubscribe() : null;
   }
 
   CreateSopi (programId: number, sopi: ISopiView) {
@@ -145,16 +150,40 @@ export class SopiActionCreator implements OnDestroy {
     );
   }
 
+  SopiBulkCreate (ProgramId: number, dataArray: any[], flat: boolean = true) {
+    this.ngRedux.dispatch({ type: SOPI_BULK_CREATE_ATTEMPT });
+    const newDataArray: ISopiView[] = this.ProcessSopiDataArray(dataArray);
+    this.bulkCreateSubscription = this.sopiService.CreateBulkSopi(ProgramId, newDataArray, flat)
+    .subscribe(
+      (data) => {
+        console.log(data);
+        this.ngRedux.dispatch({ type: SOPI_BULK_CREATE_FULFILLED });
+        this.dialogService.showSwal('success-message', {
+          title:  'Successfully uploaded courses'
+          // text: `${course.code} was successfully deleted.`
+        });
+      }, err => {
+        this.errorMessage = err._body;
+        if (this.errorMessage && typeof this.errorMessage === 'string') {
+          this.ngRedux.dispatch({ type: SOPI_BULK_CREATE_FULFILLED, error: this.errorMessage });
+        }
+      },
+      () => {
+        this.errorMessage = null;
+      }
+    );
+  }
+
   // functions
   private programSopiToView: Function = (data: IProgramSopi): ISopiView => {
     let newData: ISopiView;
     newData = {
       id: data.id,
-      code: data.Sopi.code,
-      so: data.Sopi.so.code,
+      code: data['Sopi.code'],
+      So: data['Sopi.So.code'],
       description: data.description,
-      programId: data.ProgramId,
-      program: data.Program.name
+      ProgramId: data.ProgramId,
+      Program: data['Program.name']
     };
     return newData;
   };
@@ -165,4 +194,16 @@ export class SopiActionCreator implements OnDestroy {
     });
     return sortedSopi;
   };
+
+  private ProcessSopiDataArray (dataArray: any[]): ISopiView[] {
+    console.log(dataArray);
+    const newData: ISopiView[] = dataArray.map((d) => {
+      return {
+        code: d['SOPI'],
+        So: d['SO'],
+        description: d['DESCRIPTION']
+      };
+    });
+    return newData;
+  }
 }

@@ -11,7 +11,10 @@ import {
   SOPI_UPDATE_FULFILLED,
   SOPI_DELETE_ATTEMPT,
   SOPI_DELETE_FULFILLED,
-  SOPI_DELETE_FAILED
+  SOPI_DELETE_FAILED,
+  SOPI_BULK_CREATE_ATTEMPT,
+  SOPI_BULK_CREATE_FAILED,
+  SOPI_BULK_CREATE_FULFILLED
 } from './action/sopi.actions';
 import * as sopi from './reducers/sopi.functions';
 
@@ -27,7 +30,7 @@ export const SOPI_INITIAL_STORE: ISopiStore = {
   error: ''
 }
 
-export function sopiReducer (state: ISopiStore = SOPI_INITIAL_STORE, action) {
+export function sopiReducer (state: ISopiStore = SOPI_INITIAL_STORE, action: any) {
   switch (action.type) {
     case SOPI_CREATE_ATTEMPT: return sopi.sopiCreateAttempt(state, action);
     case SOPI_CREATE_FAILED: return sopi.sopiCreateFailed(state, action);
@@ -41,6 +44,9 @@ export function sopiReducer (state: ISopiStore = SOPI_INITIAL_STORE, action) {
     case SOPI_DELETE_ATTEMPT: return sopi.sopiDeleteAttempt(state, action);
     case SOPI_DELETE_FAILED: return sopi.sopiDeleteFailed(state, action);
     case SOPI_DELETE_FULFILLED: return sopi.sopiDeleteFulfilled(state, action);
+    case SOPI_BULK_CREATE_ATTEMPT: return sopi.sopiBulkCreateAttempt(state, action);
+    case SOPI_BULK_CREATE_FAILED: return sopi.sopiBulkCreateFailed(state, action);
+    case SOPI_BULK_CREATE_FULFILLED: return sopi.sopiBulkCreateFulfilled(state, action);
   }
   return state;
 }

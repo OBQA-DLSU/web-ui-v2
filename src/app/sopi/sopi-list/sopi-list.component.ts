@@ -10,6 +10,10 @@ import {
 } from '../../store/action-creators';
 import { ISopiView } from '../../interfaces/sopi/sopi-view.interface';
 import { select } from '@angular-redux/store';
+import { ISession } from '../../interfaces/session/session.interface';
+
+import { EditSopiDialog } from '../edit-sopi-dialog/edit-sopi-dialog.component';
+
 declare var $: any;
 
 @Component({
@@ -25,18 +29,19 @@ export class SopiListComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) { }
 
-  @select(s => s.sopis.sopis) sopis;
+  @select(s => s.sopis.Sopis) Sopis$;
   @select(s => s.table.page) page;
   @select(s => s.sopis.spinner) spinner;
-  private dataNames = ['id', 'code', 'so', 'description'];
+  private dataNames = ['id', 'code', 'So', 'description'];
   private dataNameAlias = ['ID', 'SOPI Code', 'SO', 'Description'];
   private dialogRef: any;
   private dialogRefSubscription: Subscription = null;
-  private programId: number = 5;
+  private session: ISession = JSON.parse(localStorage.getItem('session'));
+  private ProgramId: number = this.session.ProgramId;
 
   ngOnInit () {
     this.miscActionCreator.UpdatePageTitle('SOPI list');
-    this.sopiActionCreator.GetSopi(this.programId);
+    this.sopiActionCreator.GetSopi(this.ProgramId);
     
   }
 
@@ -87,49 +92,6 @@ export class SopiListComponent implements OnInit, OnDestroy {
     }).catch(swal.noop);
     if (x) {
       this.sopiActionCreator.DeleteSopi(data.id, data);
-    }
-  }
-
-}
-
-
-@Component({
-  selector: 'dialog-sopi-form',
-  templateUrl: './dialog-sopi-form.html',
-})
-
-export class EditSopiDialog implements OnInit, OnDestroy {
-
-  private sopiEditForm: FormGroup;
-
-  constructor(
-    public dialogRef: MatDialogRef<EditSopiDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder
-  ) { }
-
-  ngOnInit() {
-    this.sopiEditForm = this.formBuilder.group({
-      id: [this.data.id, Validators.required],
-      code: [this.data.code, Validators.required],
-      so: [this.data.so, Validators.required],
-      description: [this.data.description, Validators.required]
-    });
-  }
-
-  ngOnDestroy() {
-
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onSubmit(form): void {
-    if (this.sopiEditForm.valid) {
-      this.dialogRef.close(`${JSON.stringify(this.sopiEditForm.value)}`);
-    } else {
-      this.dialogRef.close();
     }
   }
 

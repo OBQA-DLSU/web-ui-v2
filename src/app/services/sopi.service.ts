@@ -13,25 +13,28 @@ export class SopiService {
 
   private sopiUrl: string = `${BACKEND_URL}/api/sopi`;
 
-  GetSopi (programId: number): Observable<IProgramSopi[]> {
+  GetSopi (ProgramId: number, flat: boolean = true): Observable<IProgramSopi[]> {
     const headers = new Headers({ 'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.get(`${this.sopiUrl}/${programId}`, options)
+    return this.http.get(`${this.sopiUrl}/program/${ProgramId}?flat=${flat}`, options)
     .map(response => response.json())
+    .map(data => this.GetData(data))
   }
 
-  CreateSopi (programId: number, sopi: ISopiView): Observable<IProgramSopi> {
+  CreateSopi (ProgramId: number, Sopi: ISopiView, flat: boolean = true): Observable<IProgramSopi> {
     const headers = new Headers({ 'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.post(`${this.sopiUrl}/${programId}`, sopi, options)
+    return this.http.post(`${this.sopiUrl}/program/${ProgramId}?flat=${flat}`, Sopi, options)
     .map(response => response.json())
+    .map(data => this.GetData(data))
   }
 
-  UpdateSopi (id: number, sopi: ISopiView): Observable<IProgramSopi> {
+  UpdateSopi (id: number, Sopi: ISopiView, flat: boolean = true): Observable<IProgramSopi> {
     const headers = new Headers({ 'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
-    return this.http.put(`${this.sopiUrl}/programSopi/${id}`, sopi, options)
+    return this.http.put(`${this.sopiUrl}/programSopi/${id}?flat=${flat}`, Sopi, options)
     .map(response => response.json())
+    .map(data => this.GetData(data))
   }
 
   DeleteSopi (id: number): Observable<IProgramSopi> {
@@ -39,6 +42,19 @@ export class SopiService {
     const options = new RequestOptions({headers: headers});
     return this.http.delete(`${this.sopiUrl}/programSopi/${id}`, options)
     .map(response => response.json())
+    .map(data => this.GetData(data))
+  }
+
+  CreateBulkSopi (ProgramId: number, dataArray: ISopiView[], flat: boolean = true): Observable<any> {
+    const headers = new Headers({ 'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post(`${this.sopiUrl}/bulk/${ProgramId}?flat=${flat}`, {dataArray}, options)
+    .map(response => response.json())
+    .map(data => this.GetData(data))
+  }
+
+  GetData (data: any) {
+    return data.data;
   }
 
 }

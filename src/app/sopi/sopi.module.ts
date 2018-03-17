@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../app.module';
 
-import { SopiRoutes } from './sopi.routing';
-import { SopiListComponent, EditSopiDialog } from './sopi-list/sopi-list.component';
+import { SopiListComponent } from './sopi-list/sopi-list.component';
+import { EditSopiDialog } from './edit-sopi-dialog/edit-sopi-dialog.component';
 import { AddSopiComponent } from './add-sopi/add-sopi.component';
 import { ComponentModule } from './../components/component.module';
 import { DirectiveModule, SpinnerComponent } from '../directives';
@@ -13,12 +13,16 @@ import { DirectiveModule, SpinnerComponent } from '../directives';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(SopiRoutes),
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
     ComponentModule,
     DirectiveModule
+  ],
+  exports: [
+    SopiListComponent,
+    AddSopiComponent,
+    EditSopiDialog
   ],
   declarations: [
     SopiListComponent,

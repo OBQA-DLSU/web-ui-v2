@@ -40,7 +40,9 @@ const COORDINATOR: RouteInfo[] = [
     collapse: 'Course',
     children: [
       { path: 'course-list', title: 'Course List', ab: 'CL'},
-      { path: 'add-course', title: 'Add Course', ab: 'AC'}
+      { path: 'add-course', title: 'Add Course', ab: 'AC'},
+      { path: 'sopi-list', title: 'SOPI List', ab: 'SL' },
+      { path: 'add-sopi', title: 'Add SOPI', ab: 'AS' }
     ]
   }
 ];

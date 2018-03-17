@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoordinatorPageRoutes } from './coordinator-page.routing';
 import { DashboardModule } from '../../dashboard/dashboard.module';
 import { CourseModule, EditCourseDialog } from '../../course';
+import { SopiModule, EditSopiDialog } from '../../sopi';
 
 @NgModule({
   imports: [
@@ -13,12 +14,14 @@ import { CourseModule, EditCourseDialog } from '../../course';
     FormsModule,
     ReactiveFormsModule,
     DashboardModule,
-    CourseModule
+    CourseModule,
+    SopiModule
   ],
   declarations: [
   ],
   entryComponents: [
-    EditCourseDialog
+    EditCourseDialog,
+    EditSopiDialog
   ]
 })
 
